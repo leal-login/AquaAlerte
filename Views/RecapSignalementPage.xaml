@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AquaAlerte.Views.RecapSignalementPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,28">
+
+            <!-- En-tête : flèche + titre -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Grid WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                    <Image Source="ic_arrow_left_dark.svg" WidthRequest="26" HeightRequest="26"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Label Grid.Column="1" Text="Tout est correct ?" Style="{StaticResource PageTitle}"
+                       FontSize="28" VerticalOptions="Center" />
+            </Grid>
+            <Label Text="Étape 2 sur 2 · Avant de publier" FontSize="15"
+                   TextColor="{StaticResource AquaMuted}" Margin="4,4,0,0" />
+
+            <!-- Carte récapitulative -->
+            <Border StrokeShape="RoundRectangle 18" Stroke="{StaticResource AquaBorder}" StrokeThickness="1"
+                    BackgroundColor="White" Padding="18" Margin="0,18,0,0">
+                <VerticalStackLayout Spacing="12">
+
+                    <Border StrokeShape="RoundRectangle 10" StrokeThickness="0" HorizontalOptions="Start"
+                            BackgroundColor="#FDECEC" Padding="12,7">
+                        <HorizontalStackLayout Spacing="6">
+                            <Image Source="ic_error_red.svg" WidthRequest="18" HeightRequest="18"
+                                   VerticalOptions="Center" />
+                            <Label Text="Nouvelle coupure" FontSize="14" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaError}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </Border>
+
+                    <Label x:Name="TitleLabel" FontSize="24" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaText}" />
+                    <Label x:Name="SubLabel" FontSize="15" TextColor="{StaticResource AquaMuted}" />
+
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="0,4,0,0">
+                        <Image Source="ic_clock_teal.svg" WidthRequest="28" HeightRequest="28"
+                               VerticalOptions="Start" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label x:Name="StartLabel" FontSize="18" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaText}" />
+                            <Label x:Name="DurationLabel" FontSize="14"
+                                   TextColor="{StaticResource AquaMuted}" />
+                        </VerticalStackLayout>
+                    </Grid>
+
+                    <VerticalStackLayout x:Name="ObsSection" Spacing="6" Margin="0,4,0,0">
+                        <Label Text="Votre observation" FontSize="15" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaText}" />
+                        <Label x:Name="ObsLabel" FontSize="17" TextColor="{StaticResource AquaMuted}" />
+                    </VerticalStackLayout>
+
+                    <Label Text="Publié comme observation citoyenne, sans nom ni adresse exacte."
+                           FontSize="13" TextColor="{StaticResource AquaMuted}" Margin="0,4,0,0" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Modifier -->
+            <Button Text="Modifier les informations" BackgroundColor="White"
+                    BorderColor="{StaticResource AquaBorder}" BorderWidth="1"
+                    TextColor="{StaticResource AquaPrimary}" FontSize="16" FontAttributes="Bold"
+                    HeightRequest="52" CornerRadius="14" Margin="0,16,0,0"
+                    Clicked="OnEditClicked" />
+
+            <!-- Encadré d'information -->
+            <Border Style="{StaticResource InfoBox}" Margin="0,16,0,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                            Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                            BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                        <Label Text="i" FontSize="11" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Grid.Column="1" FontSize="15" TextColor="{StaticResource AquaText}"
+                           Text="Ce signalement décrit ce que vous constatez. Il ne confirme pas une cause et ne prédit pas l’heure du retour de l’eau." />
+                </Grid>
+            </Border>
+
+            <!-- Case à cocher -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12" Margin="0,18,0,0">
+                <Border x:Name="CheckBox" WidthRequest="26" HeightRequest="26"
+                        StrokeShape="RoundRectangle 7" Stroke="{StaticResource AquaPrimary}"
+                        StrokeThickness="1.5" Padding="0" VerticalOptions="Center">
+                    <Image x:Name="CheckIcon" Source="ic_check_teal.svg" WidthRequest="16" HeightRequest="16" />
+                </Border>
+                <Label Grid.Column="1" Text="Je constate cette coupure dans ce quartier." FontSize="16"
+                       TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCheckTapped" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <!-- Publier -->
+            <Button x:Name="PublishButton" Text="Publier le signalement"
+                    ImageSource="ic_send_white.svg" ContentLayout="Left,10"
+                    Style="{StaticResource PrimaryButton}" Margin="0,16,0,0"
+                    Clicked="OnPublishClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

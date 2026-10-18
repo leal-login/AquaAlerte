@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AquaAlerte.Views.RetourEauPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,28">
+
+            <!-- En-tête : flèche + titre -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Grid WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                    <Image Source="ic_arrow_left_dark.svg" WidthRequest="26" HeightRequest="26"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Label Grid.Column="1" Text="L’eau est revenue ?" Style="{StaticResource PageTitle}"
+                       FontSize="28" VerticalOptions="Center" />
+            </Grid>
+            <Label x:Name="SubLabel" FontSize="15" TextColor="{StaticResource AquaMuted}"
+                   Margin="4,2,0,0" />
+
+            <!-- Pastille -->
+            <Border WidthRequest="88" HeightRequest="88" StrokeShape="Ellipse" StrokeThickness="0"
+                    BackgroundColor="#E6F4EC" Padding="0" HorizontalOptions="Center" Margin="0,24,0,0">
+                <Image Source="ic_drops_green.svg" WidthRequest="44" HeightRequest="44" />
+            </Border>
+
+            <Label Text="Vous constatez de nouveau de l’eau à votre robinet ? Partagez votre observation avec le quartier."
+                   FontSize="18" TextColor="{StaticResource AquaText}" Margin="0,24,0,0" />
+
+            <!-- Rappel de la coupure -->
+            <Border StrokeShape="RoundRectangle 18" Stroke="{StaticResource AquaBorder}" StrokeThickness="1"
+                    BackgroundColor="White" Padding="18" Margin="0,18,0,0">
+                <VerticalStackLayout Spacing="10">
+                    <Label x:Name="StartTitleLabel" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaText}" />
+                    <Label x:Name="StartSubLabel" FontSize="14" TextColor="{StaticResource AquaMuted}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Quand ? -->
+            <Label Text="Quand avez-vous constaté le retour ?" FontSize="15" FontAttributes="Bold"
+                   TextColor="{StaticResource AquaText}" Margin="0,24,0,10" />
+            <HorizontalStackLayout Spacing="10">
+                <Border x:Name="ChipNow" StrokeShape="RoundRectangle 22" StrokeThickness="1" Padding="20,11">
+                    <Label x:Name="ChipNowLabel" Text="À l’instant" FontSize="15" FontAttributes="Bold" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnWhenTapped" CommandParameter="now" />
+                    </Border.GestureRecognizers>
+                </Border>
+                <Border x:Name="ChipOther" StrokeShape="RoundRectangle 22" StrokeThickness="1" Padding="20,11">
+                    <Label x:Name="ChipOtherLabel" Text="Une autre heure" FontSize="15" FontAttributes="Bold" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnWhenTapped" CommandParameter="other" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </HorizontalStackLayout>
+
+            <!-- Sélecteur d'heure (visible seulement avec « Une autre heure ») -->
+            <Border x:Name="TimeBox" Style="{StaticResource FieldBox}" IsVisible="False" Margin="0,12,0,0">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                    <TimePicker x:Name="TimePick" Format="HH 'h' mm" BackgroundColor="Transparent"
+                                TextColor="{StaticResource AquaText}" FontSize="16" VerticalOptions="Center" />
+                    <Image Grid.Column="1" Source="ic_clock_teal.svg" WidthRequest="22" HeightRequest="22"
+                           VerticalOptions="Center" InputTransparent="True" />
+                </Grid>
+            </Border>
+            <Label x:Name="WhenLabel" FontSize="14" TextColor="{StaticResource AquaMuted}"
+                   Margin="2,10,0,0" />
+
+            <!-- Note -->
+            <Label Text="Note · facultative" Style="{StaticResource FieldLabel}" Margin="0,20,0,8" />
+            <Border Style="{StaticResource FieldBox}" HeightRequest="110" Padding="16,10">
+                <Editor x:Name="NoteEditor" Placeholder="Ex. L’eau coule à nouveau chez moi."
+                        MaxLength="280" BackgroundColor="Transparent" FontSize="16"
+                        TextColor="{StaticResource AquaText}" />
+            </Border>
+
+            <!-- Encadré -->
+            <Border Style="{StaticResource InfoBox}" Margin="0,18,0,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                            Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                            BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                        <Label Text="i" FontSize="11" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Grid.Column="1" FontSize="15" TextColor="{StaticResource AquaText}"
+                           Text="Le retour peut varier d’une rue à l’autre. Votre observation ne garantit pas le retour partout dans le quartier." />
+                </Grid>
+            </Border>
+
+            <!-- Bouton -->
+            <Button Text="Confirmer le retour de l’eau" ImageSource="ic_check_white.svg"
+                    ContentLayout="Left,10" Style="{StaticResource PrimaryButton}"
+                    Margin="0,18,0,0" Clicked="OnConfirmClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

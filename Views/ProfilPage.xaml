@@ -5,12 +5,154 @@
              x:Class="AquaAlerte.Views.ProfilPage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource AquaBg}">
+
     <Grid RowDefinitions="*,Auto">
-        <VerticalStackLayout Padding="20,16,20,16" Spacing="8">
-            <Label Text="Profil" Style="{StaticResource PageTitle}" FontSize="32" />
-            <Label Text="Cet &#233;cran sera ajout&#233; &#224; l&#8217;&#233;tape suivante."
-                   Style="{StaticResource PageSubtitle}" />
-        </VerticalStackLayout>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,16,20,24">
+
+                <!-- Titre -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="Mon profil" Style="{StaticResource PageTitle}" FontSize="32" />
+                    <Image Grid.Column="1" Source="ic_drop_teal.svg" WidthRequest="26" HeightRequest="26"
+                           VerticalOptions="Start" Margin="0,6,0,0" />
+                </Grid>
+
+                <!-- Identité -->
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="16" Margin="0,18,0,0">
+                    <Border WidthRequest="76" HeightRequest="76" StrokeShape="Ellipse" StrokeThickness="0"
+                            BackgroundColor="{StaticResource AquaInfoBg}" Padding="0">
+                        <Image Source="nav_user_on.svg" WidthRequest="34" HeightRequest="34" />
+                    </Border>
+                    <VerticalStackLayout Grid.Column="1" VerticalOptions="Center" Spacing="4">
+                        <Label x:Name="NameLabel" FontSize="21" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaText}" />
+                        <Label Text="Vos observations restent anonymes." FontSize="15"
+                               TextColor="{StaticResource AquaMuted}" />
+                    </VerticalStackLayout>
+                </Grid>
+
+                <!-- Mon quartier -->
+                <Label Text="Mon quartier" FontSize="22" FontAttributes="Bold"
+                       TextColor="{StaticResource AquaText}" Margin="0,26,0,0" />
+                <Border StrokeShape="RoundRectangle 16" StrokeThickness="0"
+                        BackgroundColor="{StaticResource AquaInfoBg}" Padding="16,14" Margin="0,14,0,0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Image Source="ic_pin_teal.svg" WidthRequest="26" HeightRequest="26"
+                               VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label x:Name="QuartierLabel" FontSize="20" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaText}" />
+                            <Label x:Name="VilleLabel" FontSize="15" TextColor="{StaticResource AquaText}" />
+                        </VerticalStackLayout>
+                        <Image Grid.Column="2" Source="ic_chevron_down.svg" WidthRequest="24"
+                               HeightRequest="24" VerticalOptions="Center" />
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnChangeQuartierTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+                <Label Text="Changer de ville ou de quartier" Style="{StaticResource LinkLabel}"
+                       Margin="0,18,0,0">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnChangeQuartierTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <!-- Alertes du quartier -->
+                <Label Text="Alertes du quartier" FontSize="22" FontAttributes="Bold"
+                       TextColor="{StaticResource AquaText}" Margin="0,26,0,0" />
+                <Border StrokeShape="RoundRectangle 18" Stroke="{StaticResource AquaBorder}"
+                        StrokeThickness="1" BackgroundColor="White" Padding="16,14" Margin="0,14,0,0">
+                    <VerticalStackLayout Spacing="16">
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                <Label Text="Nouvelles coupures" FontSize="16" FontAttributes="Bold"
+                                       TextColor="{StaticResource AquaText}" />
+                                <Label x:Name="NewDescLabel" FontSize="14"
+                                       TextColor="{StaticResource AquaMuted}" />
+                            </VerticalStackLayout>
+                            <Switch x:Name="SwitchNew" Grid.Column="1" AutomationId="pref_nouvelles"
+                                    OnColor="{StaticResource AquaPrimary}" ThumbColor="White"
+                                    VerticalOptions="Center" Toggled="OnPrefToggled" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                <Label Text="Retour de l’eau" FontSize="16" FontAttributes="Bold"
+                                       TextColor="{StaticResource AquaText}" />
+                                <Label Text="Recevoir les observations de retour." FontSize="14"
+                                       TextColor="{StaticResource AquaMuted}" />
+                            </VerticalStackLayout>
+                            <Switch x:Name="SwitchReturn" Grid.Column="1" AutomationId="pref_retour"
+                                    OnColor="{StaticResource AquaPrimary}" ThumbColor="White"
+                                    VerticalOptions="Center" Toggled="OnPrefToggled" />
+                        </Grid>
+
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="12">
+                            <VerticalStackLayout Spacing="3" VerticalOptions="Center">
+                                <Label Text="Confirmations des voisins" FontSize="16" FontAttributes="Bold"
+                                       TextColor="{StaticResource AquaText}" />
+                                <Label Text="Suivre chaque nouvelle confirmation." FontSize="14"
+                                       TextColor="{StaticResource AquaMuted}" />
+                            </VerticalStackLayout>
+                            <Switch x:Name="SwitchConf" Grid.Column="1" AutomationId="pref_confirmations"
+                                    OnColor="{StaticResource AquaPrimary}" ThumbColor="White"
+                                    VerticalOptions="Center" Toggled="OnPrefToggled" />
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Encadré d'information -->
+                <Border Style="{StaticResource InfoBox}" Margin="0,18,0,0">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                                Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                                BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="i" FontSize="11" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <Label Grid.Column="1" FontSize="15" TextColor="{StaticResource AquaText}"
+                               Text="Les notifications de votre téléphone sont autorisées. Vous pouvez les gérer dans les réglages de l’appareil." />
+                    </Grid>
+                </Border>
+
+                <!-- Langue -->
+                <Label Text="Langue / Language" FontSize="22" FontAttributes="Bold"
+                       TextColor="{StaticResource AquaText}" Margin="0,26,0,0" />
+                <Border StrokeShape="RoundRectangle 18" Stroke="{StaticResource AquaBorder}"
+                        StrokeThickness="1" BackgroundColor="White" Padding="16,6" Margin="0,14,0,0">
+                    <VerticalStackLayout>
+
+                        <Grid ColumnDefinitions="*,Auto" Padding="0,12">
+                            <Label Text="Français" FontSize="17" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+                            <Image x:Name="LangFrIcon" Grid.Column="1" WidthRequest="26" HeightRequest="26" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLangTapped" CommandParameter="fr" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Color="{StaticResource AquaBorder}" />
+
+                        <Grid ColumnDefinitions="*,Auto" Padding="0,12">
+                            <Label Text="English" FontSize="17" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+                            <Image x:Name="LangEnIcon" Grid.Column="1" WidthRequest="26" HeightRequest="26" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnLangTapped" CommandParameter="en" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                    </VerticalStackLayout>
+                </Border>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
         <views:BottomNavBar Grid.Row="1" Active="ProfilPage" />
     </Grid>
 </ContentPage>

@@ -2,15 +2,114 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:views="clr-namespace:AquaAlerte.Views"
+             xmlns:models="clr-namespace:AquaAlerte.Models"
              x:Class="AquaAlerte.Views.AlertesPage"
              Shell.NavBarIsVisible="False"
              BackgroundColor="{StaticResource AquaBg}">
+
     <Grid RowDefinitions="*,Auto">
-        <VerticalStackLayout Padding="20,16,20,16" Spacing="8">
-            <Label Text="Alertes" Style="{StaticResource PageTitle}" FontSize="32" />
-            <Label Text="Cet &#233;cran sera ajout&#233; &#224; l&#8217;&#233;tape suivante."
-                   Style="{StaticResource PageSubtitle}" />
-        </VerticalStackLayout>
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,16,20,24">
+
+                <!-- Titre -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="Mes alertes" Style="{StaticResource PageTitle}" FontSize="32" />
+                    <Image Grid.Column="1" Source="ic_drop_teal.svg" WidthRequest="26" HeightRequest="26"
+                           VerticalOptions="Start" Margin="0,6,0,0" />
+                </Grid>
+                <Label x:Name="SubLabel" FontSize="15" TextColor="{StaticResource AquaMuted}"
+                       Margin="0,6,0,0" />
+
+                <!-- Compteur + tout marquer comme lu -->
+                <Grid ColumnDefinitions="*,Auto" Margin="0,18,0,0">
+                    <Label x:Name="UnreadLabel" FontSize="15" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaPrimary}" VerticalOptions="Center" />
+                    <Label x:Name="MarkAllLabel" Grid.Column="1" Text="Tout marquer comme lu"
+                           Style="{StaticResource LinkLabel}" VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnMarkAllTapped" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+
+                <!-- Filtres -->
+                <HorizontalStackLayout Spacing="10" Margin="0,16,0,0">
+                    <Border x:Name="ChipAll" StrokeShape="RoundRectangle 22" StrokeThickness="1" Padding="22,11">
+                        <Label x:Name="ChipAllLabel" Text="Toutes" FontSize="15" FontAttributes="Bold" />
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnChipTapped" CommandParameter="all" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                    <Border x:Name="ChipUnread" StrokeShape="RoundRectangle 22" StrokeThickness="1" Padding="22,11">
+                        <Label x:Name="ChipUnreadLabel" Text="Non lues" FontSize="15" FontAttributes="Bold" />
+                        <Border.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnChipTapped" CommandParameter="unread" />
+                        </Border.GestureRecognizers>
+                    </Border>
+                </HorizontalStackLayout>
+
+                <!-- Alertes, groupées par jour -->
+                <VerticalStackLayout x:Name="GroupsLayout" Spacing="22" Margin="0,22,0,0">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="models:AlerteGroupe">
+                            <VerticalStackLayout Spacing="12">
+                                <Label Text="{Binding Titre}" FontSize="22" FontAttributes="Bold"
+                                       TextColor="{StaticResource AquaText}" />
+
+                                <VerticalStackLayout Spacing="12" BindableLayout.ItemsSource="{Binding Items}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate x:DataType="models:AlerteItem">
+                                            <Border StrokeShape="RoundRectangle 18" StrokeThickness="1"
+                                                    Stroke="{Binding CarteBord}"
+                                                    BackgroundColor="{Binding CarteFond}" Padding="16">
+                                                <Border.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="OnAlertTapped" />
+                                                </Border.GestureRecognizers>
+
+                                                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                                                    <Border WidthRequest="44" HeightRequest="44"
+                                                            StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                                                            BackgroundColor="{Binding IconeFond}" Padding="0"
+                                                            VerticalOptions="Start">
+                                                        <Image Source="{Binding IconeSource}" WidthRequest="24"
+                                                               HeightRequest="24" />
+                                                    </Border>
+
+                                                    <VerticalStackLayout Grid.Column="1" Spacing="6">
+                                                        <Label Text="{Binding Titre}" FontSize="17"
+                                                               FontAttributes="Bold"
+                                                               TextColor="{StaticResource AquaText}" />
+                                                        <Label Text="{Binding Texte}" FontSize="15"
+                                                               TextColor="#4A5A68" />
+                                                        <Label Text="{Binding Heure}" FontSize="13"
+                                                               TextColor="{StaticResource AquaMuted}"
+                                                               Margin="0,2,0,0" />
+                                                    </VerticalStackLayout>
+
+                                                    <!-- Point bleu : alerte non lue -->
+                                                    <Border Grid.Column="2" WidthRequest="10" HeightRequest="10"
+                                                            StrokeShape="Ellipse" StrokeThickness="0"
+                                                            BackgroundColor="{StaticResource AquaPrimary}"
+                                                            VerticalOptions="Start" Margin="0,4,0,0"
+                                                            IsVisible="{Binding NonLue}" />
+                                                </Grid>
+                                            </Border>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </VerticalStackLayout>
+
+                <Label x:Name="EmptyLabel" Text="Aucune alerte non lue." FontSize="16"
+                       TextColor="{StaticResource AquaMuted}" HorizontalOptions="Center"
+                       IsVisible="False" Margin="0,28,0,0" />
+
+            </VerticalStackLayout>
+        </ScrollView>
+
         <views:BottomNavBar Grid.Row="1" Active="AlertesPage" />
     </Grid>
 </ContentPage>

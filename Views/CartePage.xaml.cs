@@ -131,19 +131,26 @@ public partial class CartePage : ContentPage
         SheetConfLabel.Text = s.ConfirmationsTexte;
         SheetTitle.Text = s.Rue;
         SheetSub.Text = s.EnCours
-            ? $"{s.Quartier} · début observé à {s.Debut}"
+            ? (s.DebutConnu ? $"{s.Quartier} · début observé à {s.Debut}" : $"{s.Quartier} · début inconnu")
             : $"{s.Quartier} · eau revenue à {s.Fin}";
         SheetSince.Text = s.DepuisTexte;
         ConfirmButton.IsVisible = s.EnCours;
     }
 
     private async void OnConfirmClicked(object? sender, EventArgs e)
+{
+    if (_selected == null) return;
+
+    if (!DemoData.Confirmer(_selected))
     {
-        if (_selected == null) return;
-        _selected.Confirmations++;
-        ShowDetail(_selected);
-        await DisplayAlertAsync("Merci", "Votre confirmation est prise en compte (démonstration).", "OK");
+        await DisplayAlertAsync("Déjà confirmée", "Vous avez déjà confirmé cette coupure.", "OK");
+        return;
     }
+
+    DemoData.Selected = _selected;
+    ShowDetail(_selected);
+    await Shell.Current.GoToAsync(nameof(ObservationRecuePage));
+}
 
     private async void OnChangeQuartierTapped(object? sender, TappedEventArgs e)
     {

@@ -44,7 +44,7 @@
                 <VerticalStackLayout Spacing="12">
                     <Label Text="{Binding DureeLabel}" FontSize="12" FontAttributes="Bold"
                            CharacterSpacing="0.5" TextColor="{StaticResource AquaMuted}" />
-                    <Label Text="{Binding DureeCourte}" FontSize="52" FontAttributes="Bold"
+                    <Label Text="{Binding DureeAffichee}" FontSize="52" FontAttributes="Bold"
                            TextColor="#13293D" />
                     <Label Text="{Binding DebutTexte}" FontSize="16" TextColor="{StaticResource AquaText}" />
                     <Label Text="{Binding DureeNote}" FontSize="13" TextColor="{StaticResource AquaMuted}" />
@@ -112,6 +112,15 @@
                         </Grid>
                     </DataTemplate>
                 </BindableLayout.ItemTemplate>
+                            <!-- Actions (seulement si la coupure est en cours) -->
+            <VerticalStackLayout Spacing="12" Margin="0,28,0,0" IsVisible="{Binding EnCours}">
+                <Button Text="Je constate toujours la coupure" Style="{StaticResource PrimaryButton}"
+                        Clicked="OnStillCutClicked" />
+                <Button Text="L’eau est revenue" BackgroundColor="White"
+                        BorderColor="{StaticResource AquaBorder}" BorderWidth="1"
+                        TextColor="{StaticResource AquaPrimary}" FontSize="16" FontAttributes="Bold"
+                        HeightRequest="52" CornerRadius="14" Clicked="OnWaterBackClicked" />
+            </VerticalStackLayout>
             </VerticalStackLayout>
 
         </VerticalStackLayout>

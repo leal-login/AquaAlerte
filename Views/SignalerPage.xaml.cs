@@ -109,20 +109,46 @@ public partial class SignalerPage : ContentPage
     }
 
     private async void OnContinueClicked(object? sender, EventArgs e)
+{
+    // Date et heure de début (si l'utilisateur les connaît)
+    DateTime? debut = null;
+    if (_knowsStart)
     {
-        string debut = "inconnu";
-        if (_knowsStart)
-        {
-            // Lecture compatible avec les anciennes et nouvelles versions de MAUI
-            object d = DatePick.Date;
-            object t = TimePick.Time;
-            if (d is DateTime date && t is TimeSpan time)
-                debut = $"{date:dd MMM yyyy} à {time.Hours:00} h {time.Minutes:00}";
-        }
+        DateTime? date = DatePick.Date;
+        TimeSpan? time = TimePick.Time;
+        if (date.HasValue && time.HasValue)
+            debut = date.Value.Date + time.Value;
 
-        await DisplayAlertAsync("Étape 2 à venir",
-            $"Quartier : {_quartier}\nDébut : {debut}\n\nL’étape 2 sera ajoutée avec ta maquette.", "OK");
+        if (debut > DateTime.Now)
+        {
+            await DisplayAlertAsync("Heure invalide", "Le début ne peut pas être dans le futur.", "OK");
+            return;
+        }
     }
+
+    // « Rue Joss, près de la pharmacie » : avant la virgule = rue, après = repère
+    string raw = (StreetEntry.Text ?? "").Trim();
+    string rue = raw;
+    string repere = "";
+    int i = raw.IndexOf(',');
+    if (i >= 0)
+    {
+        rue = raw[..i].Trim();
+        repere = raw[(i + 1)..].Trim();
+    }
+
+    DemoData.Brouillon = new BrouillonSignalement
+    {
+        Quartier = _quartier,
+        Ville = _ville,
+        Rue = rue,
+        Repere = repere,
+        Observation = (ObsEditor.Text ?? "").Trim(),
+        Debut = debut
+    };
+
+    await Shell.Current.GoToAsync(nameof(RecapSignalementPage));
+}
 
     private async void OnBackTapped(object? sender, TappedEventArgs e)
     {
