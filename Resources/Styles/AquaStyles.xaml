@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ResourceDictionary xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!-- ========== COULEURS ========== -->
+    <Color x:Key="AquaPrimary">#0B7A9B</Color>      <!-- bleu-vert principal -->
+    <Color x:Key="AquaBg">#F4F7FA</Color>           <!-- fond des écrans -->
+    <Color x:Key="AquaText">#14202B</Color>         <!-- texte foncé -->
+    <Color x:Key="AquaMuted">#5B6775</Color>       <!-- texte gris -->
+    <Color x:Key="AquaBorder">#D9E1E8</Color>       <!-- contour des champs -->
+    <Color x:Key="AquaSuccess">#1E9E6A</Color>      <!-- vert : champ valide -->
+    <Color x:Key="AquaError">#D64545</Color>        <!-- rouge : erreur -->
+    <Color x:Key="AquaInfoBg">#E6F5FA</Color>       <!-- fond bleu clair -->
+    <Color x:Key="AquaDisabledBg">#D9E0E6</Color>   <!-- bouton désactivé -->
+    <Color x:Key="AquaDisabledText">#8A96A3</Color>
+
+    <!-- ========== STYLES ========== -->
+    <!-- Grand titre d'un écran -->
+    <Style x:Key="PageTitle" TargetType="Label">
+        <Setter Property="FontSize" Value="30" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource AquaText}" />
+    </Style>
+
+    <!-- Phrase grise sous le titre -->
+    <Style x:Key="PageSubtitle" TargetType="Label">
+        <Setter Property="FontSize" Value="17" />
+        <Setter Property="TextColor" Value="{StaticResource AquaMuted}" />
+        <Setter Property="Margin" Value="0,8,0,0" />
+    </Style>
+
+    <!-- Petit titre au-dessus d'un champ -->
+    <Style x:Key="FieldLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource AquaText}" />
+        <Setter Property="Margin" Value="0,16,0,8" />
+    </Style>
+
+    <!-- Cadre arrondi autour d'un champ de saisie -->
+    <Style x:Key="FieldBox" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 14" />
+        <Setter Property="Stroke" Value="{StaticResource AquaBorder}" />
+        <Setter Property="StrokeThickness" Value="1" />
+        <Setter Property="BackgroundColor" Value="White" />
+        <Setter Property="Padding" Value="16,0" />
+        <Setter Property="HeightRequest" Value="52" />
+    </Style>
+
+    <!-- Zone de saisie à l'intérieur du cadre -->
+    <Style x:Key="FieldEntry" TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="Transparent" />
+        <Setter Property="TextColor" Value="{StaticResource AquaText}" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Message vert sous un champ valide -->
+    <Style x:Key="HelperOk" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource AquaSuccess}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Message rouge sous un champ en erreur -->
+    <Style x:Key="HelperError" TargetType="Label">
+        <Setter Property="FontSize" Value="13" />
+        <Setter Property="TextColor" Value="{StaticResource AquaError}" />
+        <Setter Property="VerticalOptions" Value="Center" />
+    </Style>
+
+    <!-- Lien cliquable en bleu -->
+    <Style x:Key="LinkLabel" TargetType="Label">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="TextColor" Value="{StaticResource AquaPrimary}" />
+    </Style>
+
+    <!-- Gros bouton bleu -->
+    <Style x:Key="PrimaryButton" TargetType="Button">
+        <Setter Property="BackgroundColor" Value="{StaticResource AquaPrimary}" />
+        <Setter Property="TextColor" Value="White" />
+        <Setter Property="FontSize" Value="16" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HeightRequest" Value="52" />
+        <Setter Property="CornerRadius" Value="14" />
+    </Style>
+
+    <!-- Encadré bleu clair d'information -->
+    <Style x:Key="InfoBox" TargetType="Border">
+        <Setter Property="StrokeShape" Value="RoundRectangle 12" />
+        <Setter Property="Stroke" Value="Transparent" />
+        <Setter Property="BackgroundColor" Value="{StaticResource AquaInfoBg}" />
+        <Setter Property="Padding" Value="14" />
+    </Style>
+</ResourceDictionary>
