@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AquaAlerte.Views.InscriptionPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,24">
+
+            <!-- En-tête -->
+            <HorizontalStackLayout Spacing="12">
+                <Image Source="logo.svg" WidthRequest="44" HeightRequest="44" />
+                <Label Text="AquaAlerte" FontSize="26" FontAttributes="Bold"
+                       TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <Label Text="Créer un compte" Style="{StaticResource PageTitle}" Margin="0,16,0,0" />
+            <Label Text="Rejoignez vos voisins pour mieux suivre l’eau dans votre quartier."
+                   Style="{StaticResource PageSubtitle}" />
+
+            <!-- Nom complet -->
+            <Label Text="Nom complet" Style="{StaticResource FieldLabel}" />
+            <Border x:Name="NameBox" Style="{StaticResource FieldBox}">
+                <Entry x:Name="NameEntry" Placeholder="Votre nom complet"
+                       TextChanged="OnFieldChanged" Style="{StaticResource FieldEntry}" />
+            </Border>
+
+            <!-- Téléphone -->
+            <Label Text="Numéro de téléphone" Style="{StaticResource FieldLabel}" />
+            <Border x:Name="PhoneBox" Style="{StaticResource FieldBox}">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="12">
+                    <Label Text="+237" FontSize="16" TextColor="{StaticResource AquaText}"
+                           VerticalOptions="Center" />
+                    <Entry x:Name="PhoneEntry" Grid.Column="1" Placeholder="6XX XXX XXX"
+                           Keyboard="Telephone" MaxLength="11"
+                           TextChanged="OnFieldChanged" Style="{StaticResource FieldEntry}" />
+                </Grid>
+            </Border>
+            <HorizontalStackLayout x:Name="PhoneRow" Spacing="6" Margin="2,8,0,0" IsVisible="False">
+                <Image x:Name="PhoneIcon" WidthRequest="16" HeightRequest="16" VerticalOptions="Center" />
+                <Label x:Name="PhoneHelper" Style="{StaticResource HelperOk}" />
+            </HorizontalStackLayout>
+
+            <!-- Mot de passe -->
+            <Label Text="Mot de passe" Style="{StaticResource FieldLabel}" />
+            <Border x:Name="PasswordBox" Style="{StaticResource FieldBox}">
+                <Entry x:Name="PasswordEntry" Placeholder="8 caractères minimum" IsPassword="True"
+                       TextChanged="OnFieldChanged" Style="{StaticResource FieldEntry}" />
+            </Border>
+            <HorizontalStackLayout x:Name="PasswordRow" Spacing="6" Margin="2,8,0,0" IsVisible="False">
+                <Image x:Name="PasswordIcon" WidthRequest="16" HeightRequest="16" VerticalOptions="Center" />
+                <Label x:Name="PasswordHelper" Style="{StaticResource HelperOk}" />
+            </HorizontalStackLayout>
+
+            <!-- Afficher / masquer -->
+            <HorizontalStackLayout HorizontalOptions="End" Spacing="8" Margin="0,14,0,0">
+                <Image Source="eye.svg" WidthRequest="20" HeightRequest="20" VerticalOptions="Center" />
+                <Label x:Name="ToggleLabel" Text="Afficher le mot de passe"
+                       Style="{StaticResource LinkLabel}" VerticalOptions="Center" />
+                <HorizontalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTogglePasswordTapped" />
+                </HorizontalStackLayout.GestureRecognizers>
+            </HorizontalStackLayout>
+
+            <!-- Confirmation -->
+            <Label Text="Confirmer le mot de passe" Style="{StaticResource FieldLabel}"
+                   Margin="0,6,0,8" />
+            <Border x:Name="ConfirmBox" Style="{StaticResource FieldBox}">
+                <Entry x:Name="ConfirmEntry" Placeholder="Retapez le mot de passe" IsPassword="True"
+                       TextChanged="OnFieldChanged" Style="{StaticResource FieldEntry}" />
+            </Border>
+            <HorizontalStackLayout x:Name="ConfirmRow" Spacing="6" Margin="2,8,0,0" IsVisible="False">
+                <Image x:Name="ConfirmIcon" WidthRequest="16" HeightRequest="16" VerticalOptions="Center" />
+                <Label x:Name="ConfirmHelper" Style="{StaticResource HelperOk}" />
+            </HorizontalStackLayout>
+
+            <!-- Bouton -->
+            <Button x:Name="SignUpButton" Text="Créer mon compte"
+                    Style="{StaticResource PrimaryButton}" Margin="0,20,0,0"
+                    Clicked="OnSignUpClicked" />
+
+            <!-- Retour vers la connexion -->
+            <Label HorizontalOptions="Center" Margin="0,20,0,0">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Déjà un compte ? " TextColor="{StaticResource AquaMuted}" FontSize="15" />
+                        <Span Text="Se connecter" TextColor="{StaticResource AquaPrimary}"
+                              FontAttributes="Bold" FontSize="15" />
+                    </FormattedString>
+                </Label.FormattedText>
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnBackToLoginTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+
+            <!-- Encadré d'information -->
+            <Border Style="{StaticResource InfoBox}" Margin="0,24,0,0">
+                <HorizontalStackLayout Spacing="10">
+                    <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                            Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                            BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                        <Label Text="i" FontSize="11" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Votre numéro sert à vous identifier. Il n’est pas visible par les autres habitants."
+                           FontSize="14" TextColor="{StaticResource AquaText}" />
+                </HorizontalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

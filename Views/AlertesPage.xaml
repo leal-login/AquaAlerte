@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:AquaAlerte.Views"
+             x:Class="AquaAlerte.Views.AlertesPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+    <Grid RowDefinitions="*,Auto">
+        <VerticalStackLayout Padding="20,16,20,16" Spacing="8">
+            <Label Text="Alertes" Style="{StaticResource PageTitle}" FontSize="32" />
+            <Label Text="Cet &#233;cran sera ajout&#233; &#224; l&#8217;&#233;tape suivante."
+                   Style="{StaticResource PageSubtitle}" />
+        </VerticalStackLayout>
+        <views:BottomNavBar Grid.Row="1" Active="AlertesPage" />
+    </Grid>
+</ContentPage>

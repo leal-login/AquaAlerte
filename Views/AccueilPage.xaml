@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:AquaAlerte.Views"
+             xmlns:models="clr-namespace:AquaAlerte.Models"
+             x:Class="AquaAlerte.Views.AccueilPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <ContentPage.Resources>
+        <!-- Carte d'une coupure, réutilisée dans les deux listes -->
+        <DataTemplate x:Key="ReportCard" x:DataType="models:Signalement">
+            <Border StrokeShape="RoundRectangle 18" Stroke="{StaticResource AquaBorder}"
+                    StrokeThickness="1" BackgroundColor="White">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnCardTapped" />
+                </Border.GestureRecognizers>
+                <Grid ColumnDefinitions="5,*">
+                    <BoxView Color="{Binding Accent}" />
+                    <VerticalStackLayout Grid.Column="1" Padding="16,14" Spacing="10">
+                        <Grid ColumnDefinitions="Auto,*">
+                            <Border StrokeShape="RoundRectangle 10" StrokeThickness="0"
+                                    BackgroundColor="{Binding BadgeBg}" Padding="10,6">
+                                <HorizontalStackLayout Spacing="6">
+                                    <Image Source="{Binding BadgeIcon}" WidthRequest="18" HeightRequest="18"
+                                           VerticalOptions="Center" />
+                                    <Label Text="{Binding StatutTexte}" FontSize="14" FontAttributes="Bold"
+                                           TextColor="{Binding Accent}" VerticalOptions="Center" />
+                                </HorizontalStackLayout>
+                            </Border>
+                            <Label Grid.Column="1" Text="{Binding ConfirmationsTexte}" FontSize="14"
+                                   TextColor="{StaticResource AquaMuted}"
+                                   HorizontalOptions="End" VerticalOptions="Center" />
+                        </Grid>
+                        <Label Text="{Binding Titre}" FontSize="20" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaText}" />
+                        <HorizontalStackLayout Spacing="8">
+                            <Image Source="ic_clock_gray.svg" WidthRequest="20" HeightRequest="20"
+                                   VerticalOptions="Center" />
+                            <Label Text="{Binding DepuisTexte}" FontSize="16"
+                                   TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="{Binding MajTexte}" FontSize="14"
+                                   TextColor="{StaticResource AquaMuted}" VerticalOptions="Center" />
+                            <Image Grid.Column="1" Source="ic_arrow_right_teal.svg"
+                                   WidthRequest="20" HeightRequest="20" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Grid>
+            </Border>
+        </DataTemplate>
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView>
+            <VerticalStackLayout Padding="20,16,20,24">
+
+                <!-- Titre -->
+                <Grid ColumnDefinitions="*,Auto">
+                    <Label Text="Mon quartier" Style="{StaticResource PageTitle}" FontSize="32" />
+                    <Image Grid.Column="1" Source="ic_drop_teal.svg" WidthRequest="26" HeightRequest="26"
+                           VerticalOptions="Start" Margin="0,6,0,0" />
+                </Grid>
+                <Label Text="Mardi 6 octobre · dernière synchro à 14 h 30" FontSize="15"
+                       TextColor="{StaticResource AquaMuted}" Margin="0,6,0,0" />
+
+                <!-- Sélecteur de quartier -->
+                <Border StrokeShape="RoundRectangle 16" StrokeThickness="0"
+                        BackgroundColor="{StaticResource AquaInfoBg}" Padding="16,14" Margin="0,16,0,0">
+                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                        <Image Source="ic_pin_teal.svg" WidthRequest="26" HeightRequest="26"
+                               VerticalOptions="Center" />
+                        <VerticalStackLayout Grid.Column="1" Spacing="2">
+                            <Label x:Name="QuartierLabel" Text="Akwa" FontSize="20" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaText}" />
+                            <Label x:Name="VilleLabel" Text="Douala · Cameroun" FontSize="15"
+                                   TextColor="{StaticResource AquaText}" />
+                        </VerticalStackLayout>
+                        <Image Grid.Column="2" Source="ic_chevron_down.svg" WidthRequest="24"
+                               HeightRequest="24" VerticalOptions="Center" />
+                    </Grid>
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnChangeQuartierTapped" />
+                    </Border.GestureRecognizers>
+                </Border>
+
+                <!-- Avertissement données fictives -->
+                <Border StrokeShape="RoundRectangle 12" Stroke="#F3DDB8" StrokeThickness="1"
+                        BackgroundColor="#FFF3E0" Padding="14,12" Margin="0,14,0,0">
+                    <Label Text="Données fictives de démonstration · 06/10/2026, 14 h 30. Signalements citoyens, non validés par le fournisseur."
+                           FontSize="13" TextColor="#8A5A12" />
+                </Border>
+
+                <!-- Deux chiffres -->
+                <Grid ColumnDefinitions="*,*" ColumnSpacing="14" Margin="0,16,0,0">
+                    <Border StrokeShape="RoundRectangle 20" StrokeThickness="0"
+                            BackgroundColor="#13293D" Padding="18,16" HeightRequest="112">
+                        <VerticalStackLayout VerticalOptions="End">
+                            <Label x:Name="OutageCountLabel" Text="1" FontSize="40"
+                                   FontAttributes="Bold" TextColor="White" />
+                            <Label x:Name="OutageTextLabel" Text="coupure en cours" FontSize="15"
+                                   TextColor="White" />
+                        </VerticalStackLayout>
+                    </Border>
+                    <Border Grid.Column="1" StrokeShape="RoundRectangle 20" StrokeThickness="0"
+                            BackgroundColor="{StaticResource AquaInfoBg}" Padding="18,16" HeightRequest="112">
+                        <VerticalStackLayout VerticalOptions="End">
+                            <Label x:Name="ConfCountLabel" Text="24" FontSize="40"
+                                   FontAttributes="Bold" TextColor="{StaticResource AquaPrimary}" />
+                            <Label Text="confirmations" FontSize="15" TextColor="#1F4B5F" />
+                        </VerticalStackLayout>
+                    </Border>
+                </Grid>
+
+                <!-- Bouton signaler -->
+                <Button Text="Signaler une coupure" ImageSource="ic_plus_circle_white.svg"
+                        ContentLayout="Left,10" Style="{StaticResource PrimaryButton}"
+                        Margin="0,16,0,0" Clicked="OnReportClicked" />
+
+                <!-- En cours dans le quartier -->
+                <Label x:Name="SectionCurrentLabel" Text="En cours à Akwa" FontSize="22"
+                       FontAttributes="Bold" TextColor="{StaticResource AquaText}" Margin="0,26,0,0" />
+                <VerticalStackLayout x:Name="CurrentLayout" Spacing="12" Margin="0,12,0,0"
+                                     BindableLayout.ItemTemplate="{StaticResource ReportCard}" />
+                <Label x:Name="NoCurrentLabel" FontSize="15" TextColor="{StaticResource AquaMuted}"
+                       IsVisible="False" Margin="0,12,0,0" />
+
+                <!-- À proximité -->
+                <VerticalStackLayout x:Name="NearbySection" Margin="0,26,0,0">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="À proximité" FontSize="22" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+                        <Label Grid.Column="1" Text="Voir la carte" Style="{StaticResource LinkLabel}"
+                               VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="OnSeeMapTapped" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </Grid>
+                    <VerticalStackLayout x:Name="NearbyLayout" Spacing="12" Margin="0,12,0,0"
+                                         BindableLayout.ItemTemplate="{StaticResource ReportCard}" />
+                </VerticalStackLayout>
+
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <views:BottomNavBar Grid.Row="1" Active="AccueilPage" />
+    </Grid>
+</ContentPage>

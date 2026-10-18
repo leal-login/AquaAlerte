@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AquaAlerte.Views.OnboardingPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <!-- La page = 4 lignes : en-tête, progression, contenu (qui s'étire), pied de page -->
+    <Grid RowDefinitions="Auto,Auto,*,Auto" Padding="20,16,20,16">
+
+        <!-- LIGNE 0 : en-tête fixe (logo + « Passer ») -->
+        <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+            <HorizontalStackLayout Spacing="12">
+                <Image Source="logo.svg" WidthRequest="44" HeightRequest="44" />
+                <Label Text="AquaAlerte" FontSize="26" FontAttributes="Bold"
+                       TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+            <Label x:Name="SkipLabel" Grid.Column="1" Text="Passer"
+                   Style="{StaticResource LinkLabel}" FontSize="16"
+                   Padding="12,10" VerticalOptions="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSkipTapped" />
+                </Label.GestureRecognizers>
+            </Label>
+        </Grid>
+
+        <!-- LIGNE 1 : progression (3 petites pastilles + « 1 sur 3 ») -->
+        <Grid Grid.Row="1" ColumnDefinitions="*,Auto" Margin="0,12,0,0">
+            <HorizontalStackLayout Spacing="6" VerticalOptions="Center">
+                <BoxView x:Name="Dot1" WidthRequest="28" HeightRequest="6" CornerRadius="3"
+                         Color="{StaticResource AquaPrimary}" />
+                <BoxView x:Name="Dot2" WidthRequest="8" HeightRequest="6" CornerRadius="3"
+                         Color="{StaticResource AquaBorder}" />
+                <BoxView x:Name="Dot3" WidthRequest="8" HeightRequest="6" CornerRadius="3"
+                         Color="{StaticResource AquaBorder}" />
+            </HorizontalStackLayout>
+            <Label x:Name="CounterLabel" Grid.Column="1" Text="1 sur 3" FontSize="14"
+                   TextColor="{StaticResource AquaMuted}" VerticalOptions="Center" />
+        </Grid>
+
+        <!-- LIGNE 2 : zone centrale. Les 3 écrans sont superposés, un seul est visible -->
+        <ScrollView Grid.Row="2" Margin="0,16,0,0">
+            <Grid>
+
+                <!-- ===== ÉCRAN 1 : Repérer les coupures ===== -->
+                <VerticalStackLayout x:Name="Slide1">
+
+                    <Border StrokeShape="RoundRectangle 24" StrokeThickness="0" HeightRequest="270">
+                        <Grid>
+                            <Image Source="onboarding_carte.svg" Aspect="AspectFill" />
+
+                            <Border StrokeShape="RoundRectangle 16" StrokeThickness="0"
+                                    BackgroundColor="White" Padding="12,6"
+                                    HorizontalOptions="Start" VerticalOptions="Start" Margin="14,14,0,0">
+                                <Label Text="Akwa · Douala" FontSize="14" FontAttributes="Bold"
+                                       TextColor="{StaticResource AquaText}" />
+                            </Border>
+
+                            <Grid HorizontalOptions="Center" VerticalOptions="Start" Margin="0,35,0,0">
+                                <Border WidthRequest="124" HeightRequest="124" StrokeShape="Ellipse"
+                                        Stroke="#7FBFD2" StrokeThickness="1" BackgroundColor="#66BFE3EF" />
+                                <Border WidthRequest="48" HeightRequest="48" StrokeShape="Ellipse"
+                                        StrokeThickness="0" Padding="0"
+                                        BackgroundColor="{StaticResource AquaPrimary}"
+                                        HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image Source="ic_pin_white.svg" WidthRequest="24" HeightRequest="24" />
+                                </Border>
+                            </Grid>
+
+                            <Border StrokeShape="RoundRectangle 16" Stroke="#E1E7EC" StrokeThickness="1"
+                                    BackgroundColor="White" Padding="16"
+                                    VerticalOptions="End" Margin="14,0,14,14">
+                                <VerticalStackLayout Spacing="6">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <HorizontalStackLayout Spacing="8">
+                                            <Border WidthRequest="8" HeightRequest="8" StrokeShape="Ellipse"
+                                                    StrokeThickness="0" BackgroundColor="{StaticResource AquaError}"
+                                                    VerticalOptions="Center" />
+                                            <Label Text="Coupure signalée" FontSize="14" FontAttributes="Bold"
+                                                   TextColor="{StaticResource AquaText}" />
+                                        </HorizontalStackLayout>
+                                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" StrokeThickness="0"
+                                                BackgroundColor="#EEF2F5" Padding="8,3">
+                                            <Label Text="Exemple" FontSize="12" FontAttributes="Bold"
+                                                   TextColor="{StaticResource AquaMuted}" />
+                                        </Border>
+                                    </Grid>
+                                    <Label Text="Boulevard de la Liberté" FontSize="20" FontAttributes="Bold"
+                                           TextColor="{StaticResource AquaText}" />
+                                    <Label Text="24 confirmations de voisins" FontSize="14"
+                                           TextColor="{StaticResource AquaMuted}" />
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Label Text="À PROXIMITÉ" FontSize="12" FontAttributes="Bold" CharacterSpacing="1"
+                           TextColor="{StaticResource AquaPrimary}" Margin="0,22,0,0" />
+                    <Label Text="Repérez les coupures près de chez vous." Style="{StaticResource PageTitle}"
+                           FontSize="32" Margin="0,8,0,0" />
+                    <Label Text="À Douala, retrouvez les coupures signalées par les habitants de votre quartier et des environs."
+                           Style="{StaticResource PageSubtitle}" />
+
+                    <Border Style="{StaticResource InfoBox}" Margin="0,18,0,0">
+                        <HorizontalStackLayout Spacing="10">
+                            <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                                    Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                                    BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                                <Label Text="i" FontSize="11" FontAttributes="Bold"
+                                       TextColor="{StaticResource AquaPrimary}"
+                                       HorizontalOptions="Center" VerticalOptions="Center" />
+                            </Border>
+                            <Label Text="Des observations citoyennes, pas une information officielle du fournisseur d’eau."
+                                   FontSize="14" TextColor="{StaticResource AquaText}" />
+                        </HorizontalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- ===== ÉCRAN 2 : S'entraider entre voisins ===== -->
+                <VerticalStackLayout x:Name="Slide2" IsVisible="False">
+
+                    <Border StrokeShape="RoundRectangle 24" StrokeThickness="0" HeightRequest="270">
+    <Grid>
+        <Image Source="voisins.png" Aspect="AspectFill" />
+
+        <!-- Carte blanche « exemple » -->
+        <Border StrokeShape="RoundRectangle 16" Stroke="#E1E7EC" StrokeThickness="1"
+                BackgroundColor="White" Padding="14"
+                VerticalOptions="End" Margin="14,0,14,14">
+            <VerticalStackLayout Spacing="10">
+                <Grid ColumnDefinitions="*,Auto">
+                    <HorizontalStackLayout Spacing="10">
+                        <Image Source="ic_users_teal.svg" WidthRequest="22" HeightRequest="22"
+                               VerticalOptions="Center" />
+                        <Label Text="Une observation à Akwa" FontSize="15" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Border Grid.Column="1" StrokeShape="RoundRectangle 8" StrokeThickness="0"
+                            BackgroundColor="#EEF2F5" Padding="8,3" VerticalOptions="Center">
+                        <Label Text="Exemple" FontSize="12" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaMuted}" />
+                    </Border>
+                </Grid>
+                <Border StrokeShape="RoundRectangle 12" StrokeThickness="0"
+                        BackgroundColor="{StaticResource AquaInfoBg}" Padding="12,10">
+                    <HorizontalStackLayout Spacing="8" HorizontalOptions="Center">
+                        <Image Source="ic_check_circle_teal.svg" WidthRequest="20" HeightRequest="20"
+                               VerticalOptions="Center" />
+                        <Label Text="Je constate aussi la coupure" FontSize="15" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaPrimary}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+        </Border>
+    </Grid>
+</Border>
+
+                    <Label Text="ENSEMBLE" FontSize="12" FontAttributes="Bold" CharacterSpacing="1"
+                           TextColor="{StaticResource AquaPrimary}" Margin="0,22,0,0" />
+                    <Label Text="Vos observations aident vos voisins." Style="{StaticResource PageTitle}"
+                           FontSize="32" Margin="0,8,0,0" />
+                    <Label Text="Pas d’eau chez vous ? Signalez-le. Vous constatez la même coupure ? Confirmez l’observation d’un voisin."
+                           Style="{StaticResource PageSubtitle}" />
+                </VerticalStackLayout>
+
+                <!-- ===== ÉCRAN 3 : Suivre le retour de l'eau ===== -->
+                <VerticalStackLayout x:Name="Slide3" IsVisible="False">
+
+                    <Border StrokeShape="RoundRectangle 24" StrokeThickness="0" HeightRequest="270"
+                            BackgroundColor="#E3F3F8">
+                        <Grid>
+                            <!-- Cercles concentriques + cloche -->
+                            <Grid HorizontalOptions="Center" VerticalOptions="Start" Margin="0,20,0,0">
+                                <Border WidthRequest="160" HeightRequest="160" StrokeShape="Ellipse"
+                                        Stroke="#CFE6EE" StrokeThickness="1" BackgroundColor="Transparent" />
+                                <Border WidthRequest="126" HeightRequest="126" StrokeShape="Ellipse"
+                                        Stroke="#BFDDE8" StrokeThickness="1" BackgroundColor="Transparent" />
+                                <Border WidthRequest="100" HeightRequest="100" StrokeShape="Ellipse"
+                                        StrokeThickness="0" BackgroundColor="White"
+                                        HorizontalOptions="Center" VerticalOptions="Center">
+                                    <Image Source="ic_bell_teal.svg" WidthRequest="56" HeightRequest="56" />
+                                </Border>
+                                <!-- Pastille « 1 » -->
+                                <Border WidthRequest="28" HeightRequest="28" StrokeShape="Ellipse" Padding="0"
+                                        StrokeThickness="2" Stroke="White"
+                                        BackgroundColor="{StaticResource AquaPrimary}"
+                                        HorizontalOptions="Center" VerticalOptions="Center"
+                                        TranslationX="38" TranslationY="-36">
+                                    <Label Text="1" FontSize="14" FontAttributes="Bold" TextColor="White"
+                                           HorizontalOptions="Center" VerticalOptions="Center" />
+                                </Border>
+                            </Grid>
+
+                            <!-- Notification d'exemple -->
+                            <Border StrokeShape="RoundRectangle 16" Stroke="#E1E7EC" StrokeThickness="1"
+                                    BackgroundColor="White" Padding="14"
+                                    VerticalOptions="End" Margin="14,0,14,14">
+                                <VerticalStackLayout Spacing="10">
+                                    <Grid ColumnDefinitions="*,Auto">
+                                        <Label Text="AquaAlerte · Akwa" FontSize="14" FontAttributes="Bold"
+                                               TextColor="{StaticResource AquaPrimary}" VerticalOptions="Center" />
+                                        <Border Grid.Column="1" StrokeShape="RoundRectangle 8" StrokeThickness="0"
+                                                BackgroundColor="#EEF2F5" Padding="8,3" VerticalOptions="Center">
+                                            <Label Text="Exemple" FontSize="12" FontAttributes="Bold"
+                                                   TextColor="{StaticResource AquaMuted}" />
+                                        </Border>
+                                    </Grid>
+                                    <HorizontalStackLayout Spacing="12">
+                                        <Border WidthRequest="44" HeightRequest="44" StrokeShape="RoundRectangle 12"
+                                                StrokeThickness="0" BackgroundColor="#E4F5EC" Padding="0">
+                                            <Image Source="ic_drop_green.svg" WidthRequest="22" HeightRequest="22" />
+                                        </Border>
+                                        <VerticalStackLayout VerticalOptions="Center" Spacing="2">
+                                            <Label Text="Retour de l’eau signalé" FontSize="16" FontAttributes="Bold"
+                                                   TextColor="{StaticResource AquaText}" />
+                                            <Label Text="Un voisin observe de l’eau au robinet." FontSize="14"
+                                                   TextColor="{StaticResource AquaMuted}" />
+                                        </VerticalStackLayout>
+                                    </HorizontalStackLayout>
+                                </VerticalStackLayout>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Label Text="RESTER INFORMÉ" FontSize="12" FontAttributes="Bold" CharacterSpacing="1"
+                           TextColor="{StaticResource AquaPrimary}" Margin="0,22,0,0" />
+                    <Label Text="Suivez le retour de l’eau dans votre quartier." Style="{StaticResource PageTitle}"
+                           FontSize="32" Margin="0,8,0,0" />
+                    <Label Text="Soyez informé lorsqu’un voisin signale le retour de l’eau. Consultez les nouvelles observations du quartier."
+                           Style="{StaticResource PageSubtitle}" />
+                </VerticalStackLayout>
+
+            </Grid>
+        </ScrollView>
+
+        <!-- LIGNE 3 : pied de page fixe (bouton + phrase) -->
+        <VerticalStackLayout Grid.Row="3" Spacing="14" Margin="0,12,0,0">
+            <Button x:Name="NextButton" Text="Suivant" Style="{StaticResource PrimaryButton}"
+                    Clicked="OnNextClicked" />
+            <Label Text="Aucun compte requis pour consulter les coupures." FontSize="13"
+                   TextColor="{StaticResource AquaMuted}" HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>

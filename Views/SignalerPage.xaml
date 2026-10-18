@@ -1,0 +1,153 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AquaAlerte.Views.SignalerPage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,28">
+
+            <!-- En-tête : flèche + titre -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Grid WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                    <Image Source="ic_arrow_left_dark.svg" WidthRequest="26" HeightRequest="26"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Label Grid.Column="1" Text="Signaler une coupure" Style="{StaticResource PageTitle}"
+                       FontSize="28" VerticalOptions="Center" />
+            </Grid>
+            <Label Text="Étape 1 sur 2 · Votre observation" FontSize="15"
+                   TextColor="{StaticResource AquaMuted}" Margin="4,4,0,0" />
+
+            <!-- Coupure déjà signalée (visible seulement s'il y en a une) -->
+            <VerticalStackLayout x:Name="ExistingSection">
+                <Border Style="{StaticResource InfoBox}" Margin="0,16,0,0">
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                                Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                                BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                            <Label Text="i" FontSize="11" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaPrimary}"
+                                   HorizontalOptions="Center" VerticalOptions="Center" />
+                        </Border>
+                        <VerticalStackLayout Grid.Column="1" Spacing="4">
+                            <Label x:Name="ExistingTitle" FontSize="15" FontAttributes="Bold"
+                                   TextColor="{StaticResource AquaText}" />
+                            <Label x:Name="ExistingText" FontSize="14"
+                                   TextColor="{StaticResource AquaText}" />
+                        </VerticalStackLayout>
+                    </Grid>
+                </Border>
+                <Button Text="Voir la coupure existante" BackgroundColor="White"
+                        BorderColor="{StaticResource AquaBorder}" BorderWidth="1"
+                        TextColor="{StaticResource AquaPrimary}" FontSize="16" FontAttributes="Bold"
+                        HeightRequest="52" CornerRadius="14" Margin="0,14,0,0"
+                        Clicked="OnSeeExistingClicked" />
+            </VerticalStackLayout>
+
+            <!-- Quartier concerné -->
+            <Label Text="Quartier concerné" Style="{StaticResource FieldLabel}" Margin="0,22,0,8" />
+            <Border StrokeShape="RoundRectangle 16" StrokeThickness="0"
+                    BackgroundColor="{StaticResource AquaInfoBg}" Padding="16,14">
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                    <Image Source="ic_pin_teal.svg" WidthRequest="26" HeightRequest="26"
+                           VerticalOptions="Center" />
+                    <VerticalStackLayout Grid.Column="1" Spacing="2">
+                        <Label x:Name="QuartierLabel" FontSize="20" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaText}" />
+                        <Label x:Name="VilleLabel" FontSize="15" TextColor="{StaticResource AquaText}" />
+                    </VerticalStackLayout>
+                    <Image Grid.Column="2" Source="ic_chevron_down.svg" WidthRequest="24"
+                           HeightRequest="24" VerticalOptions="Center" />
+                </Grid>
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnChangeQuartierTapped" />
+                </Border.GestureRecognizers>
+            </Border>
+
+            <!-- Rue ou repère -->
+            <Label Text="Rue ou repère · facultatif" Style="{StaticResource FieldLabel}" Margin="0,22,0,8" />
+            <Border Style="{StaticResource FieldBox}">
+                <Grid ColumnDefinitions="*,Auto" ColumnSpacing="8">
+                    <Entry x:Name="StreetEntry" Placeholder="Ex. Rue Joss, près de la pharmacie"
+                           Focused="OnFieldFocused" Unfocused="OnFieldUnfocused"
+                           Style="{StaticResource FieldEntry}" />
+                    <Image Grid.Column="1" Source="ic_target_teal.svg" WidthRequest="22"
+                           HeightRequest="22" VerticalOptions="Center">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="OnUsePositionTapped" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Grid>
+            </Border>
+            <Label Text="Évitez votre adresse exacte et les données personnelles." FontSize="13"
+                   TextColor="{StaticResource AquaMuted}" Margin="4,8,0,0" />
+
+            <!-- Début connu ? -->
+            <Label Text="Savez-vous quand la coupure a commencé ?" FontSize="15" FontAttributes="Bold"
+                   TextColor="{StaticResource AquaText}" Margin="0,24,0,10" />
+            <HorizontalStackLayout Spacing="10">
+                <Border x:Name="ChipKnow" StrokeShape="RoundRectangle 22" StrokeThickness="1" Padding="20,11">
+                    <Label x:Name="ChipKnowLabel" Text="Oui, je sais" FontSize="15" FontAttributes="Bold" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnKnowTapped" CommandParameter="yes" />
+                    </Border.GestureRecognizers>
+                </Border>
+                <Border x:Name="ChipUnknown" StrokeShape="RoundRectangle 22" StrokeThickness="1" Padding="20,11">
+                    <Label x:Name="ChipUnknownLabel" Text="Je ne sais pas" FontSize="15" FontAttributes="Bold" />
+                    <Border.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnKnowTapped" CommandParameter="no" />
+                    </Border.GestureRecognizers>
+                </Border>
+            </HorizontalStackLayout>
+
+            <!-- Date et heure -->
+            <Grid x:Name="DateTimeGrid" ColumnDefinitions="*,*" ColumnSpacing="14" Margin="0,18,0,0">
+                <VerticalStackLayout Grid.Column="0">
+                    <Label Text="Date" Style="{StaticResource FieldLabel}" Margin="0,0,0,8" />
+                    <Border Style="{StaticResource FieldBox}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                            <DatePicker x:Name="DatePick" Format="dd MMM yyyy" BackgroundColor="Transparent"
+                                        TextColor="{StaticResource AquaText}" FontSize="16"
+                                        VerticalOptions="Center" />
+                            <Image Grid.Column="1" Source="ic_calendar_teal.svg" WidthRequest="22"
+                                   HeightRequest="22" VerticalOptions="Center" InputTransparent="True" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1">
+                    <Label Text="Heure" Style="{StaticResource FieldLabel}" Margin="0,0,0,8" />
+                    <Border Style="{StaticResource FieldBox}">
+                        <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                            <TimePicker x:Name="TimePick" Format="HH 'h' mm" BackgroundColor="Transparent"
+                                        TextColor="{StaticResource AquaText}" FontSize="16"
+                                        VerticalOptions="Center" />
+                            <Image Grid.Column="1" Source="ic_clock_teal.svg" WidthRequest="22"
+                                   HeightRequest="22" VerticalOptions="Center" InputTransparent="True" />
+                        </Grid>
+                    </Border>
+                </VerticalStackLayout>
+            </Grid>
+            <Label Text="Si le début est inconnu, la durée sera indiquée comme inconnue." FontSize="13"
+                   TextColor="{StaticResource AquaMuted}" Margin="4,12,0,0" />
+
+            <!-- Observation -->
+            <Label Text="Votre observation · facultatif" Style="{StaticResource FieldLabel}" Margin="0,22,0,8" />
+            <Border Style="{StaticResource FieldBox}" HeightRequest="110" Padding="16,10">
+                <Editor x:Name="ObsEditor" Placeholder="Ex. Pas d’eau au robinet dans notre immeuble."
+                        MaxLength="280" BackgroundColor="Transparent" FontSize="16"
+                        TextColor="{StaticResource AquaText}"
+                        Focused="OnFieldFocused" Unfocused="OnFieldUnfocused" />
+            </Border>
+
+            <!-- Bouton -->
+            <Button Text="Continuer" Style="{StaticResource PrimaryButton}" Margin="0,24,0,0"
+                    Clicked="OnContinueClicked" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

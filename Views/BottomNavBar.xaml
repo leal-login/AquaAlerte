@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AquaAlerte.Views.BottomNavBar">
+
+    <Grid RowDefinitions="1,Auto" BackgroundColor="White">
+        <BoxView Color="{StaticResource AquaBorder}" />
+
+        <Grid Grid.Row="1" ColumnDefinitions="*,*,*,*,*" Padding="4,10,4,8">
+
+            <VerticalStackLayout Grid.Column="0" Spacing="4" BackgroundColor="White">
+                <Image x:Name="HomeIcon" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" />
+                <Label x:Name="HomeLabel" Text="Accueil" FontSize="12" HorizontalOptions="Center" />
+                <BoxView x:Name="HomeBar" WidthRequest="22" HeightRequest="3" CornerRadius="2"
+                         Color="{StaticResource AquaPrimary}" HorizontalOptions="Center" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="AccueilPage" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="1" Spacing="4" BackgroundColor="White">
+                <Image x:Name="MapIcon" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" />
+                <Label x:Name="MapLabel" Text="Carte" FontSize="12" HorizontalOptions="Center" />
+                <BoxView x:Name="MapBar" WidthRequest="22" HeightRequest="3" CornerRadius="2"
+                         Color="{StaticResource AquaPrimary}" HorizontalOptions="Center" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="CartePage" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="2" Spacing="4" BackgroundColor="White">
+                <Image x:Name="PlusIcon" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" />
+                <Label x:Name="PlusLabel" Text="Signaler" FontSize="12" HorizontalOptions="Center" />
+                <BoxView x:Name="PlusBar" WidthRequest="22" HeightRequest="3" CornerRadius="2"
+                         Color="{StaticResource AquaPrimary}" HorizontalOptions="Center" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="SignalerPage" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="3" Spacing="4" BackgroundColor="White">
+                <Image x:Name="BellIcon" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" />
+                <Label x:Name="BellLabel" Text="Alertes" FontSize="12" HorizontalOptions="Center" />
+                <BoxView x:Name="BellBar" WidthRequest="22" HeightRequest="3" CornerRadius="2"
+                         Color="{StaticResource AquaPrimary}" HorizontalOptions="Center" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="AlertesPage" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+            <VerticalStackLayout Grid.Column="4" Spacing="4" BackgroundColor="White">
+                <Image x:Name="UserIcon" WidthRequest="26" HeightRequest="26" HorizontalOptions="Center" />
+                <Label x:Name="UserLabel" Text="Profil" FontSize="12" HorizontalOptions="Center" />
+                <BoxView x:Name="UserBar" WidthRequest="22" HeightRequest="3" CornerRadius="2"
+                         Color="{StaticResource AquaPrimary}" HorizontalOptions="Center" />
+                <VerticalStackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnTabTapped" CommandParameter="ProfilPage" />
+                </VerticalStackLayout.GestureRecognizers>
+            </VerticalStackLayout>
+
+        </Grid>
+    </Grid>
+</ContentView>

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="AquaAlerte.Views.BienvenuePage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,24">
+
+            <!-- En-tête -->
+            <HorizontalStackLayout Spacing="12">
+                <Image Source="logo.svg" WidthRequest="44" HeightRequest="44" />
+                <Label Text="AquaAlerte" FontSize="26" FontAttributes="Bold"
+                       TextColor="{StaticResource AquaText}" VerticalOptions="Center" />
+            </HorizontalStackLayout>
+
+            <!-- Image -->
+            <Border StrokeShape="RoundRectangle 28" StrokeThickness="0"
+                    HeightRequest="250" Margin="0,16,0,0">
+                <Image Source="voisins.png" Aspect="AspectFill" />
+            </Border>
+
+            <!-- Textes -->
+            <Label Text="L’EAU NOUS RELIE" FontSize="13" FontAttributes="Bold" CharacterSpacing="1"
+                   TextColor="{StaticResource AquaPrimary}" Margin="0,22,0,0" />
+            <Label Text="Votre quartier, mieux informé." Style="{StaticResource PageTitle}"
+                   FontSize="34" Margin="0,8,0,0" />
+            <Label Text="Signalez les coupures d’eau, suivez les observations de vos voisins et soyez informé du retour de l’eau."
+                   Style="{StaticResource PageSubtitle}" FontSize="16" />
+
+            <!-- Trois points forts -->
+            <Grid ColumnDefinitions="*,*,*" Margin="0,24,0,0">
+                <VerticalStackLayout Grid.Column="0" Spacing="8" HorizontalOptions="Center">
+                    <Image Source="ic_pin_teal.svg" WidthRequest="24" HeightRequest="24" />
+                    <Label Text="À proximité" FontSize="14" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaText}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="1" Spacing="8" HorizontalOptions="Center">
+                    <Image Source="ic_users_teal.svg" WidthRequest="24" HeightRequest="24" />
+                    <Label Text="Ensemble" FontSize="14" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaText}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+                <VerticalStackLayout Grid.Column="2" Spacing="8" HorizontalOptions="Center">
+                    <Image Source="ic_bell_teal.svg" WidthRequest="24" HeightRequest="24" />
+                    <Label Text="Informé" FontSize="14" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaText}" HorizontalOptions="Center" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Bouton -->
+            <Button Text="Choisir mon quartier" ImageSource="ic_arrow_right_white.svg"
+                    ContentLayout="Left,10" Style="{StaticResource PrimaryButton}"
+                    Margin="0,24,0,0" Clicked="OnChooseClicked" />
+
+            <Label Text="Aucun compte requis pour consulter les coupures." FontSize="13"
+                   TextColor="{StaticResource AquaMuted}" HorizontalOptions="Center"
+                   Margin="0,14,0,0" />
+
+            <!-- Encadré d'information -->
+            <Border Style="{StaticResource InfoBox}" Margin="0,20,0,0">
+                <HorizontalStackLayout Spacing="10">
+                    <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                            Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                            BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                        <Label Text="i" FontSize="11" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="Des observations citoyennes, pas une information officielle du fournisseur d’eau."
+                           FontSize="14" TextColor="{StaticResource AquaText}" />
+                </HorizontalStackLayout>
+            </Border>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

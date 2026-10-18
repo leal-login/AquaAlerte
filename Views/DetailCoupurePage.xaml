@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:AquaAlerte.Models"
+             x:Class="AquaAlerte.Views.DetailCoupurePage"
+             Shell.NavBarIsVisible="False"
+             BackgroundColor="{StaticResource AquaBg}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20,16,20,28">
+
+            <!-- En-tête : flèche + titre -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                <Grid WidthRequest="44" HeightRequest="44" VerticalOptions="Center">
+                    <Image Source="ic_arrow_left_dark.svg" WidthRequest="26" HeightRequest="26"
+                           HorizontalOptions="Center" VerticalOptions="Center" />
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnBackTapped" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+                <Label Grid.Column="1" Text="Détail de la coupure" Style="{StaticResource PageTitle}"
+                       FontSize="28" VerticalOptions="Center" />
+            </Grid>
+            <Label Text="{Binding SousTitre}" FontSize="15"
+                   TextColor="{StaticResource AquaMuted}" Margin="4,2,0,0" />
+
+            <!-- Pastille de statut -->
+            <Border StrokeShape="RoundRectangle 12" StrokeThickness="0" HorizontalOptions="Start"
+                    BackgroundColor="{Binding BadgeBg}" Padding="12,7" Margin="0,16,0,0">
+                <Grid ColumnDefinitions="Auto,Auto" ColumnSpacing="6">
+                    <Image Source="{Binding BadgeIcon}" WidthRequest="18" HeightRequest="18"
+                           VerticalOptions="Center" />
+                    <Label Grid.Column="1" Text="{Binding StatutTexte}" FontSize="14" FontAttributes="Bold"
+                           TextColor="{Binding Accent}" VerticalOptions="Center" />
+                </Grid>
+            </Border>
+
+            <Label Text="{Binding Rue}" FontSize="28" FontAttributes="Bold"
+                   TextColor="{StaticResource AquaText}" Margin="0,20,0,0" />
+
+            <!-- Carte de la durée -->
+            <Border StrokeShape="RoundRectangle 20" Stroke="{StaticResource AquaBorder}" StrokeThickness="1"
+                    BackgroundColor="White" Padding="20" Margin="0,18,0,0">
+                <VerticalStackLayout Spacing="12">
+                    <Label Text="{Binding DureeLabel}" FontSize="12" FontAttributes="Bold"
+                           CharacterSpacing="0.5" TextColor="{StaticResource AquaMuted}" />
+                    <Label Text="{Binding DureeCourte}" FontSize="52" FontAttributes="Bold"
+                           TextColor="#13293D" />
+                    <Label Text="{Binding DebutTexte}" FontSize="16" TextColor="{StaticResource AquaText}" />
+                    <Label Text="{Binding DureeNote}" FontSize="13" TextColor="{StaticResource AquaMuted}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Confirmations -->
+            <Grid ColumnDefinitions="Auto,*" ColumnSpacing="14" Margin="0,22,0,0">
+                <Image Source="ic_users_teal.svg" WidthRequest="30" HeightRequest="30"
+                       VerticalOptions="Start" />
+                <VerticalStackLayout Grid.Column="1" Spacing="4">
+                    <Label Text="{Binding ConfirmationsDetail}" FontSize="18" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaText}" />
+                    <Label Text="{Binding DerniereObsTexte}" FontSize="15"
+                           TextColor="{StaticResource AquaMuted}" />
+                </VerticalStackLayout>
+            </Grid>
+
+            <!-- Encadré d'information -->
+            <Border Style="{StaticResource InfoBox}" Margin="0,18,0,0">
+                <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                    <Border WidthRequest="18" HeightRequest="18" StrokeShape="Ellipse" Padding="0"
+                            Stroke="{StaticResource AquaPrimary}" StrokeThickness="1.5"
+                            BackgroundColor="Transparent" VerticalOptions="Start" Margin="0,2,0,0">
+                        <Label Text="i" FontSize="11" FontAttributes="Bold"
+                               TextColor="{StaticResource AquaPrimary}"
+                               HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Grid.Column="1" Text="{Binding InfoTexte}" FontSize="15"
+                           TextColor="{StaticResource AquaText}" />
+                </Grid>
+            </Border>
+
+            <!-- Note du premier signalement -->
+            <Border StrokeShape="RoundRectangle 18" Stroke="{StaticResource AquaBorder}" StrokeThickness="1"
+                    BackgroundColor="White" Padding="18" Margin="0,18,0,0" IsVisible="{Binding HasNote}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="Note du premier signalement" FontSize="15" FontAttributes="Bold"
+                           TextColor="{StaticResource AquaText}" />
+                    <Label Text="{Binding NoteTexte}" FontSize="16" TextColor="{StaticResource AquaMuted}" />
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Activité de la communauté -->
+            <Label Text="Activité de la communauté" FontSize="22" FontAttributes="Bold"
+                   TextColor="{StaticResource AquaText}" Margin="0,26,0,0" />
+            <VerticalStackLayout Spacing="18" Margin="0,14,0,0"
+                                 BindableLayout.ItemsSource="{Binding Activites}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="models:Activite">
+                        <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="14">
+                            <Border WidthRequest="40" HeightRequest="40" StrokeShape="Ellipse"
+                                    StrokeThickness="0" BackgroundColor="{StaticResource AquaInfoBg}"
+                                    Padding="0" VerticalOptions="Start">
+                                <Image Source="ic_drop_teal.svg" WidthRequest="20" HeightRequest="20" />
+                            </Border>
+                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                <Label Text="{Binding Titre}" FontSize="17" FontAttributes="Bold"
+                                       TextColor="{StaticResource AquaText}" />
+                                <Label Text="{Binding Detail}" FontSize="15"
+                                       TextColor="{StaticResource AquaMuted}" />
+                            </VerticalStackLayout>
+                            <Label Grid.Column="2" Text="{Binding Heure}" FontSize="15"
+                                   TextColor="{StaticResource AquaMuted}" VerticalOptions="Start" />
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
