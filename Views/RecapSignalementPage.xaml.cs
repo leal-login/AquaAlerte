@@ -63,6 +63,7 @@ public partial class RecapSignalementPage : ContentPage
         DateTime now = DateTime.Now;
         DateTime? debut = _draft.Debut;
         int mine = DemoData.Signalements.Count(s => s.EstMien);
+        var pos = DemoData.PositionPour(_draft.Quartier, _draft.Ville, mine);
 
         var s = new Signalement
         {
@@ -86,8 +87,8 @@ public partial class RecapSignalementPage : ContentPage
             DebutReel = debut,
             ConfirmeParMoi = true,
             MaConfirmation = $"{now.ToString("d MMM", TimeHelper.Fr)} à {TimeHelper.Heure(now)}",
-            MapX = 0.58 + 0.12 * (mine % 3),
-            MapY = 0.46 + 0.10 * ((mine / 3) % 2),
+            Latitude = pos.Lat,
+            Longitude = pos.Lng,
             Activites = new()
             {
                 new Activite

@@ -50,6 +50,13 @@ public class Signalement
     public double MapX { get; set; }
     public double MapY { get; set; }
 
+    // Identifiant sur le serveur (0 = pas encore envoyé)
+    public int ServerId { get; set; }
+
+        // Position GPS sur la vraie carte
+    public double Latitude { get; set; }
+    public double Longitude { get; set; }
+
     // ----- Textes pour l'accueil et la carte -----
     public string Titre => $"{Quartier} · {Rue}";
     public string StatutTexte => EnCours ? "En cours" : "Eau revenue";
